@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block title %}Produto{% endblock %}
 
 {% block content %}
@@ -10,6 +9,7 @@
 <table>
     <thead>
         <tr>
+            <!-- {{ result }} -->
             <th scope="col">#</th>
             <th scope="col">Codigo </th>
             <th scope="col">Nome do Produto</th>
@@ -19,17 +19,20 @@
         </tr>
     </thead>
     <tbody>
+        {% if result%}
+        {% for row in result%}
         <tr>
-            <th scope="row">...</th>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
+            <th scope="row">{{ row['id_produto'] }}</th>
+            <td> {{ row['codigo'] }}</td>
+            <td> {{ row['nome'] }}</td>
+            <td> {{ row['descricao'] }}</td>
+            <td> {{ row['valor_unitario'] }}</td>
+            <td> {{ row['preco'] }}</td>
             <td><i class="fas fa-edit"></i></td>
             <td><i class="fas fa-trash"></i></td>
         </tr>
+        {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

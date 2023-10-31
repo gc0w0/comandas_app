@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-
-{% block title %}Funcionários{% endblock %}
+{% block title %}Funcionário{% endblock %}
 
 {% block content %}
-<form action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+<form action="{{ url_for('funcionario.formFuncionario') }}" method="POST"> <!--cara n sei ao certo kakasksdksdks tava como formListaFuncionario sla pq-->
     <h1>Funcionários</h1>
     <button type="submit" name="formNovo">Novo Funcionário</button>
 </form>
 <table>
     <thead>
         <tr>
+            {{ result }}
             <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">Matricula</th>
@@ -20,17 +20,21 @@
         </tr>
     </thead>
     <tbody>
+        {% if result%}
+        {% for row in result%}
         <tr>
-            <th scope="row">...</th>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
+            <th scope="row"> {{ row['id_funcionario'] }}</th>
+            <td> {{ row['nome'] }}</td>
+            <td> {{ row['matricula'] }}</td>
+            <td> {{ row['cpf'] }}</td>
+            <td> {{ row['telefone'] }}</td>
+            <td> {{ row['grupo'] }}</td>
+            <td> {{ row['senha'] }}</td>
             <td><i class="fas fa-edit"></i></td>
             <td><i class="fas fa-trash"></i></td>
         </tr>
+        {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

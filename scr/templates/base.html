@@ -10,20 +10,37 @@
             color: #6495ED;
         }
     </style>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.maskedinput.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.2-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.4.2-web/css/all.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
 
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.2-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.4.2-web/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sweetalert2/sweetalert2.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- monitorar log do navegador, pois a ordem interfere -->
+    <script src="{{ url_for('static', filename='jquery-3.7.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.maskedinput.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-5.3.2-dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='fontawesome-free-6.4.2-web/js/all.js') }}"></script>
+    <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
 </head>
 
 <body>
     {% block menu %}
-    <!-- <li><a href="{{ url_for('index.formIndex') }}"><i class="fas fa-home"></i> HOME</a></li>
-        <li><a href="{{ url_for('funcionario.formListaFuncionario') }}"><i class="fas fa-cart-arrow-down"></i>FUNCIONÁRIOS</a></li>
-        <li><a href="{{ url_for('cliente.formListaCliente') }}"><i class="fas fa-users"></i> CLIENTES</a></li>
-        <li><a href="{{ url_for('produto.formListaProduto') }}"><i class="fas fa-pizza-slice"></i> PRODUTOS</a></li> -->
 
-    <!-- CSS de NAV BAR -->
+    <script>
+        Swal.fire({
+            title: 'Teste!',
+            text: 'sweetalert2 funcionando!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
@@ -46,32 +63,14 @@
                         <a class="nav-link active" aria-current="page" href="{{ url_for('index.formIndex') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('funcionario.formListaFuncionario') }}">FUNCIONÁRIOS</a>
+                        <a class="nav-link" href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionários</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('cliente.formListaCliente') }}">CLIENTES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('produto.formListaProduto') }}">PRODUTOS</a>
+                        <a class="nav-link" href="{{ url_for('produto.formListaProduto') }}">Produtos</a>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                        </li> -->
-
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -94,8 +93,40 @@
 
     </div class="text-center">
 
+    {% if request.args.get('msg'): %}
+    <h3>{{ request.args.get('msg') }}</h3>
+    <br>
+    {% elif msg: %}
+    <h3>{{ msg }}</h3>
+    <br>
+    {% elif request.args.get('msgErro'): %}
+    <h3>{{ request.args.get('msgErro') }}</h3>
+    <br>
+    {% elif msgErro: %}
+    <h3>{{ msgErro }}</h3>
+    <br>
+    {% endif %}
 
 
+    <!-- redirect - request.args.get('msg' ou 'msgErro') -->
+    {% if request.args.get('msg'): %}
+    <script>
+        Swal.fire("Sucesso", "{{ request.args.get('msg') }}", "success");
+    </script>
+    {% elif request.args.get('msgErro'): %}
+    <script>
+        Swal.fire("Erro", "{{ request.args.get('msgErro') }}", "error");
+    </script>
+    <!-- render_template - msg ou msgErro -->
+    {% elif msg: %}
+    <script>
+        Swal.fire("ID {{ msg.id }}, {{ msg.msg }} ", "{{ msg }}", "success");
+    </script>
+    {% elif msgErro: %}
+    <script>
+        Swal.fire("{{ msgErro.msg if msgErro.msg else 'Erro' }}", "{{ msgErro }}", "error");
+    </script>
+    {% endif %}
 
     <br><br><br>
     </div class="text-center">

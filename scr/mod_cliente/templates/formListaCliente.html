@@ -21,15 +21,22 @@
             <th scope="col">Excluir</th>
         </tr>
     </thead>
-        <th scope="row">...</th>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td><i class="fas fa-edit"></i></td>
-        <td><i class="fas fa-trash"></i></td>
-        </tbody>
+    <tbody>
+        {% if result%}
+        {% for row in result%}
+        <tr>
+            <th scope="row">{{ row['id_cliente'] }}</th>
+            <td> {{ row['nome'] }}</td>
+            <td> {{ row['cpf'] }}</td>
+            <td> {{ row['telefone'] }}</td>
+            <td> {{ row['compra_fiado'] }}</td>
+            <td> {{ row['dia_fiado'] }}</td>
+            <td> {{ row['senha'] }}</td>
+            <td><i class="fas fa-edit"></i></td>
+            <td><i class="fas fa-trash"></i></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </tbody>
 </table>
 {% endblock %}
