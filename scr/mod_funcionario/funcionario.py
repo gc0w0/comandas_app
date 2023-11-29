@@ -2,10 +2,12 @@ from flask import Blueprint, render_template, request, redirect, url_for,jsonify
 import requests
 from funcoes import Funcoes
 from settings import HEADERS_API, ENDPOINT_FUNCIONARIO
+from mod_login.login import validaSessao
 
 bp_funcionario = Blueprint('funcionario', __name__, url_prefix="/funcionario", template_folder='templates')
 
 @bp_funcionario.route('/insert', methods=['POST'])
+@validaSessao
 def insert():
     try:
         # dados enviados via FORM
@@ -40,6 +42,7 @@ def insert():
 
 ''' rotas dos formulários '''
 @bp_funcionario.route('/', methods=['GET'])
+@validaSessao
 def formListaFuncionario():
     try:
         response = requests.get(ENDPOINT_FUNCIONARIO, headers=HEADERS_API)
@@ -53,11 +56,13 @@ def formListaFuncionario():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
 
 @bp_funcionario.route('/form-funcionario/', methods=['GET','POST'])
+@validaSessao
 def formFuncionario():
     return render_template('formFuncionario.html')
 
 #atv 15
 @bp_funcionario.route("/form-edit-funcionario", methods=['POST'])
+@validaSessao
 def formEditFuncionario():
     try:
         # ID enviado via FORM
@@ -77,6 +82,7 @@ def formEditFuncionario():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
     
 @bp_funcionario.route('/edit', methods=['POST'])
+@validaSessao
 def edit():
     try:
         # dados enviados via FORM
@@ -105,6 +111,7 @@ def edit():
         return render_template('formListaFuncionario.html', msgErro=e.args[0])
     
 @bp_funcionario.route('/delete', methods=['POST'])
+@validaSessao
 def delete():
     try:
         # dados enviados via FORM
@@ -123,3 +130,5 @@ def delete():
     except Exception as e:
         # return render_template('formListaFuncionario.html', msgErro=e.args[0])
         return jsonify(erro=True, msgErro=e.args[0])
+    
+

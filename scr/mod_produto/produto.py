@@ -26,6 +26,7 @@ def insert():
         # executa o verbo POST da API e armazena seu retorno
         response = requests.post(ENDPOINT_PRODUTO, headers=HEADERS_API, json=payload)
         result = response.json()
+        
      
         if (response.status_code != 200 or result[1] != 200):
             raise Exception(result[0])

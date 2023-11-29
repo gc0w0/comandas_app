@@ -8,4 +8,8 @@
 <ul>
     <li><a href="{{ url_for('index.formIndex') }}">Home</a></li>
 </ul>
+
+{% if 'login' in session %}
+Bem-vindo <b>{{ session['login'] }}</b>
+{% endif %}
 {% endblock %}
